@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableOAuth2Sso
 @Order(2)
-@Oauth2Token
+/* @Oauth2Token */
 public class SecurityConfigOauth2Token extends WebSecurityConfigurerAdapter {
 
 	 

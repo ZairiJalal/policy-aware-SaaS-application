@@ -30,10 +30,8 @@ public class AppUser {
 	private Long id;
 	private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-
 	private String password;
-	@ManyToOne            
-	private Tenant tenant;
+	private String idTenant;
 	@ManyToMany(fetch = FetchType.EAGER)
     private Collection<AppRole> appRoles=new ArrayList<>();
 	

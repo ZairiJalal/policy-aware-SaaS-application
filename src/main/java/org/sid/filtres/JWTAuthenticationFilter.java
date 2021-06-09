@@ -31,7 +31,6 @@
 	  }
   
   @Override public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-		System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 
 	  AppUser appUser=new AppUser();
 	  appUser.setUsername(request.getParameter("username")); 

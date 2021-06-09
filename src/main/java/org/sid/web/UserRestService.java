@@ -6,10 +6,8 @@ import java.util.List; import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.sid.repo.AppUserRepository;
-import org.sid.repo.TenantRepository;
 import org.sid.service.AccountService;
 import org.sid.entities.AppUser;
-import org.sid.entities.Tenant;
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.web.bind.annotation.CrossOrigin; 
 import org.springframework.web.bind.annotation.PathVariable; 
@@ -19,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
   
   @RestController
-  @RequestMapping(value = "/{id_tenant}" ) 
+  @RequestMapping() 
 
   @CrossOrigin(origins = "*", allowedHeaders = "*")
   
@@ -27,8 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
   
 	  @Autowired 
 	  private AppUserRepository userRepository;
-	  @Autowired 
-	  private TenantRepository tenantRepository;
 	  @Autowired
 	  AccountService accountService;
   
@@ -47,15 +43,11 @@ import org.springframework.web.bind.annotation.RestController;
 	 */
 	  
 	  @RequestMapping(value = "/users", method = RequestMethod.POST) 
-	  public AppUser saveUser(HttpServletRequest request,@PathVariable String id_tenant)
-	  {
-	   
-		  AppUser appUser = new AppUser(null, request.getParameter("username"),  request.getParameter("password"), tenantRepository.findByUsername(id_tenant), new ArrayList<>());
-		  
-		  appUser = accountService.addNewUser(appUser); 
-		  
-			  accountService.addRoleToUser(appUser.getUsername(), "USER");
-			  return appUser;
+	  public AppUser saveUser(@RequestBody AppUser appUser )
+	  {	  		
+		  appUser = accountService.addNewUser(appUser); 		  			  
+		  accountService.addRoleToUser(appUser.getUsername(), "USER");		 
+		  return appUser;
 	  }
 	   
 	/*

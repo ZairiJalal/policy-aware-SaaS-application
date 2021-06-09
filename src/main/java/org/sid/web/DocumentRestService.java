@@ -8,13 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.sid.repo.AppUserRepository;
 import org.sid.repo.DocumentRepository;
-import org.sid.repo.TenantRepository;
 import org.sid.service.CurrentTenant;
 import org.sid.service.CurrentUser;
 import org.json.simple.parser.ParseException;
 import org.sid.entities.AppUser;
 import org.sid.entities.Document;
-import org.sid.entities.Tenant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

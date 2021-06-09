@@ -32,7 +32,7 @@ import  org.springframework.security.authentication.AuthenticationManager;
   @Configuration
   @Order(1)
   @EnableWebSecurity 
-  @Credentials
+	/* @Credentials */
   
   public class SecurityConfigCredentials extends WebSecurityConfigurerAdapter {
   
@@ -60,7 +60,7 @@ import  org.springframework.security.authentication.AuthenticationManager;
 	  http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	  http.headers().frameOptions().disable();
 	  http.authorizeRequests().antMatchers("/login","/h2-console/**","/refreshToken/**").permitAll();
-	  http.authorizeRequests().antMatchers(HttpMethod.POST,"/**/users").permitAll();
+	  http.authorizeRequests().antMatchers(HttpMethod.POST,"/users").permitAll();
 	  http.authorizeRequests().antMatchers(HttpMethod.GET,"/users/**").hasAnyAuthority("ADMIN");
 	  http.authorizeRequests().antMatchers("/documents/**").hasAnyAuthority("USER");
 	  http.authorizeRequests().anyRequest().authenticated();
