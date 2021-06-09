@@ -28,9 +28,12 @@ import  org.springframework.security.authentication.AuthenticationManager;
   import  org.springframework.security.core.userdetails.UserDetailsService; 
   import  org.springframework.security.core.userdetails.UsernameNotFoundException;
   import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
   
   @Configuration
   @Order(1)
+  @CrossOrigin("*")
+
   @EnableWebSecurity 
 	/* @Credentials */
   
@@ -44,6 +47,7 @@ import  org.springframework.security.authentication.AuthenticationManager;
 	  auth.userDetailsService(new UserDetailsService() {
 		  
 		  @Override public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { 
+			  System.out.println(username);
 			  AppUser appUser = accountService.loadUserByUsername(username); 
 			  Collection<GrantedAuthority>  authorities= new ArrayList<>();
 			  appUser.getAppRoles().forEach(r->{		 
@@ -59,7 +63,7 @@ import  org.springframework.security.authentication.AuthenticationManager;
 	  http.csrf().disable();
 	  http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	  http.headers().frameOptions().disable();
-	  http.authorizeRequests().antMatchers("/login","/users","/h2-console/**","/refreshToken/**").permitAll();
+	  http.authorizeRequests().antMatchers("/login","/users","/h2-console","/refreshToken/**").permitAll();
 		/*
 		 * http.authorizeRequests().antMatchers(HttpMethod.POST,"/users").permitAll();
 		 */		/*
