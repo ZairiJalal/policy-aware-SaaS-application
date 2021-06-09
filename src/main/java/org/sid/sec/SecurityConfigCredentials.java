@@ -28,10 +28,14 @@ import  org.springframework.security.authentication.AuthenticationManager;
   import  org.springframework.security.core.userdetails.UserDetailsService; 
   import  org.springframework.security.core.userdetails.UsernameNotFoundException;
   import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
   
   @Configuration
   @Order(1)
   @EnableWebSecurity 
+  @CrossOrigin("*")
+
 	/* @Credentials */
   
   public class SecurityConfigCredentials extends WebSecurityConfigurerAdapter {
