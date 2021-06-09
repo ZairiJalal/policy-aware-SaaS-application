@@ -47,6 +47,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 	  auth.userDetailsService(new UserDetailsService() {
 		  
 		  @Override public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { 
+			  System.out.println("---------------");
 			  System.out.println(username);
 			  AppUser appUser = accountService.loadUserByUsername(username); 
 			  Collection<GrantedAuthority>  authorities= new ArrayList<>();

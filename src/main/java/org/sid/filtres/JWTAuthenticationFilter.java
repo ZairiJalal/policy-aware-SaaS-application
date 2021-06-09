@@ -35,11 +35,13 @@
 	  AppUser appUser=new AppUser();
 	  appUser.setUsername(request.getParameter("username")); 
 	  appUser.setPassword(request.getParameter("password")); 
+	  System.out.println("---------------------");
+	  System.out.println(appUser.getUsername());
 	  return   authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(appUser.getUsername(),appUser.getPassword())); 
 	  }
   
   @Override protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-	  
+	  System.out.println("----------------- JJT-------------------");
 	  User authenticatedUser= (User)authResult.getPrincipal();
 	  Algorithm algorithm=Algorithm.HMAC256("myHMACPrivateKey"); 
 	  String jwtAccessToken= JWT
