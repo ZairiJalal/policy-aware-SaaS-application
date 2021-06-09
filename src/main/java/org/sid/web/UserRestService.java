@@ -26,11 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 	  @Autowired
 	  AccountService accountService;
   
-		/*
-		 * @RequestMapping(value = "/users", method = RequestMethod.GET ) public
-		 * List<AppUser> getUsers(@PathVariable Long id_tenant){ return
-		 * userRepository.findByTenant(tenantRepository.findById(id_tenant)); }
-		 */
+		
+		  @RequestMapping(value = "/users", method = RequestMethod.GET )
+		  public List<AppUser> getUsers(){ 
+			  return userRepository.findAll();
+			  }
+		 
   
   
 	

@@ -59,10 +59,13 @@ import  org.springframework.security.authentication.AuthenticationManager;
 	  http.csrf().disable();
 	  http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	  http.headers().frameOptions().disable();
-	  http.authorizeRequests().antMatchers("/login","/h2-console/**","/refreshToken/**").permitAll();
-	  http.authorizeRequests().antMatchers(HttpMethod.POST,"/users").permitAll();
-	  http.authorizeRequests().antMatchers(HttpMethod.GET,"/users/**").hasAnyAuthority("ADMIN");
-	  http.authorizeRequests().antMatchers("/documents/**").hasAnyAuthority("USER");
+	  http.authorizeRequests().antMatchers("/login","/users","/h2-console/**","/refreshToken/**").permitAll();
+		/*
+		 * http.authorizeRequests().antMatchers(HttpMethod.POST,"/users").permitAll();
+		 */		/*
+		 * http.authorizeRequests().antMatchers(HttpMethod.GET,"/users/**").
+		 * hasAnyAuthority("ADMIN");
+		 */	  http.authorizeRequests().antMatchers("/documents/**").hasAnyAuthority("USER");
 	  http.authorizeRequests().anyRequest().authenticated();
 	  http.addFilter(new JWTAuthenticationFilter(authenticationManagerBean()));
 	  http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
