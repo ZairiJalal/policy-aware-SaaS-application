@@ -33,8 +33,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
   
   @Configuration
   @Order(1)
-  @EnableWebSecurity 
   @CrossOrigin("*")
+
+  @EnableWebSecurity 
 
 	/* @Credentials */
   
