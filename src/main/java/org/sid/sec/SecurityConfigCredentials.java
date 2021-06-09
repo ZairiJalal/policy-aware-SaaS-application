@@ -29,6 +29,9 @@ import  org.springframework.security.authentication.AuthenticationManager;
   import  org.springframework.security.core.userdetails.UsernameNotFoundException;
   import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
   
   @Configuration
   @Order(1)
@@ -41,7 +44,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
   
   @Autowired  
   private AccountService accountService;
-  
+  @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception { 
      
 	  auth.userDetailsService(new UserDetailsService() {
@@ -57,9 +60,19 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 			  }  
 		  }); 
   }
+
+
+  @Bean
+  CorsConfigurationSource corsConfigurationSource() {
+      UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+      source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+      return source;
+  }
   
-   
+  @Override
   protected void configure(HttpSecurity http) throws Exception {
+
+      http.cors().and();
 
 	  http.csrf().disable();
 	  http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
