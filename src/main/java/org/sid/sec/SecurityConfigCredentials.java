@@ -85,7 +85,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 		 * hasAnyAuthority("ADMIN");
 		 */	  http.authorizeRequests().antMatchers("/documents/**").hasAnyAuthority("USER");
 	  http.authorizeRequests().anyRequest().authenticated();
-	  http.addFilter(new JWTAuthenticationFilter(authenticationManagerBean(), null));
+	  http.addFilter(new JWTAuthenticationFilter(authenticationManagerBean()));
 	  http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	  
   }

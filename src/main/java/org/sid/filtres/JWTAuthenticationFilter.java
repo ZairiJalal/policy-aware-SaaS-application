@@ -29,7 +29,7 @@ import
   private AuthenticationManager authenticationManager;
   private AppUserRepository appUserRepository;
   
-  public JWTAuthenticationFilter(AuthenticationManager authenticationManager,AppUserRepository appUserRepository) {
+  public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
   
 	  this.authenticationManager = authenticationManager;
 	  this.appUserRepository= appUserRepository;
