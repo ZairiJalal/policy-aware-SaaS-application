@@ -2,8 +2,9 @@
   package org.sid.sec;
   
   import java.util.ArrayList;
-  import java.util.Collection; 
+  import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
 
 import org.sid.custom_annotation.Credentials;
 import org.sid.entities.AppUser;
@@ -46,6 +47,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
   @Autowired  
   private AccountService accountService;
   @Autowired AppUserRepository appUserRepository;
+  @Autowired HttpServletRequest httpServletRequest ;
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception { 
      
@@ -58,7 +60,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 			  Collection<GrantedAuthority>  authorities= new ArrayList<>();
 			  appUser.getAppRoles().forEach(r->{		 
 				  authorities.add(new SimpleGrantedAuthority(r.getRoleName())); });
-			  return new  User(appUser.getUsername(), appUser.getPassword(), authorities);
+			  if(httpServletRequest.getParameter("idTenant").equals(appUser.getIdTenant()))
+			  
+				  return new  User(appUser.getUsername(), appUser.getPassword(), authorities);
+			  return null;
 			  }   
 		  }); 
   }

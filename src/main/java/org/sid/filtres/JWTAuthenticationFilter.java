@@ -41,13 +41,7 @@ import
 	  appUser.setUsername(request.getParameter("username")); 
 	  appUser.setPassword(request.getParameter("password")); 
 	  AppUser us = appUserRepository.findByUsername(request.getParameter("username"));
-	  System.out.println("----------------------------------------");
-	  System.out.println(us.getIdTenant());
-	  System.out.println(request.getParameter("idTenant"));
-	  if(us.getIdTenant().equals(request.getParameter("idTenant")))
 		  return   authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(appUser.getUsername(),appUser.getPassword())); 
-	  appUserRepository.findById((long) 9865);
-	  return null;
 	  }
   
   @Override protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
