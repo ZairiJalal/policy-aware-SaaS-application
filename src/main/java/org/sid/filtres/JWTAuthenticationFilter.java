@@ -41,6 +41,9 @@ import
 	  appUser.setUsername(request.getParameter("username")); 
 	  appUser.setPassword(request.getParameter("password")); 
 	  AppUser us = appUserRepository.findByUsername(request.getParameter("username"));
+	  System.out.println("----------------------------------------");
+	  System.out.println(us.getIdTenant());
+	  System.out.println(request.getParameter("idTenant"));
 	  if(us.getIdTenant().equals(request.getParameter("idTenant")))
 		  return   authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(appUser.getUsername(),appUser.getPassword())); 
 	  return null;
