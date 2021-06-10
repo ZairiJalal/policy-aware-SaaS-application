@@ -44,10 +44,12 @@ import
 	  System.out.println("----------------------------------------");
 	  System.out.println(us.getIdTenant());
 	  System.out.println(request.getParameter("idTenant"));
-	  if(us.getIdTenant().equals(request.getParameter("idTenant")))
-		  return   authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(appUser.getUsername(),appUser.getPassword())); 
-	  return null;
-	  }
+		/*
+		 * if(us.getIdTenant().equals(request.getParameter("idTenant")))
+		 */		  return   authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(appUser.getUsername(),appUser.getPassword())); 
+		/*
+		 * return null;
+		 */	  }
   
   @Override protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 	  System.out.println("----------------- JJT-------------------");
