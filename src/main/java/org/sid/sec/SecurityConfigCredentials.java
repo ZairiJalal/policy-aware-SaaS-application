@@ -57,7 +57,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 			  appUser.getAppRoles().forEach(r->{		 
 				  authorities.add(new SimpleGrantedAuthority(r.getRoleName())); });
 			  return new  User(appUser.getUsername(), appUser.getPassword(), authorities);
-			  }  
+			  }   
 		  }); 
   }
 
@@ -85,7 +85,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 		 * hasAnyAuthority("ADMIN");
 		 */	  http.authorizeRequests().antMatchers("/documents/**").hasAnyAuthority("USER");
 	  http.authorizeRequests().anyRequest().authenticated();
-	  http.addFilter(new JWTAuthenticationFilter(authenticationManagerBean()));
+	  http.addFilter(new JWTAuthenticationFilter(authenticationManagerBean(), null));
 	  http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	  
   }
