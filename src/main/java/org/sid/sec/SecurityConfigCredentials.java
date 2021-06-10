@@ -9,7 +9,8 @@ import org.sid.custom_annotation.Credentials;
 import org.sid.entities.AppUser;
 import org.sid.filtres.JWTAuthenticationFilter;
 import org.sid.filtres.JWTAuthorizationFilter;
-  import org.sid.service.AccountService; 
+import org.sid.repo.AppUserRepository;
+import org.sid.service.AccountService; 
   import  org.springframework.beans.factory.annotation.Autowired;
   import  org.springframework.context.annotation.Bean; 
   import  org.springframework.context.annotation.Configuration;
@@ -44,6 +45,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
   
   @Autowired  
   private AccountService accountService;
+  @Autowired AppUserRepository appUserRepository;
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception { 
      
@@ -85,7 +87,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 		 * hasAnyAuthority("ADMIN");
 		 */	  http.authorizeRequests().antMatchers("/documents/**").hasAnyAuthority("USER");
 	  http.authorizeRequests().anyRequest().authenticated();
-	  http.addFilter(new JWTAuthenticationFilter(authenticationManagerBean()));
+	  http.addFilter(new JWTAuthenticationFilter(authenticationManagerBean(), appUserRepository));
 	  http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	  
   }
