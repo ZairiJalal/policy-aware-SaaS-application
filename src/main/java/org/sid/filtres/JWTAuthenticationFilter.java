@@ -8,7 +8,10 @@
   import javax.servlet.http.HttpServletRequest; import
   javax.servlet.http.HttpServletResponse;
   
-  import org.sid.entities.AppUser; import
+  import org.sid.entities.AppUser;
+import org.sid.repo.AppUserRepository;
+import org.sid.service.AccountService;
+import
   org.springframework.security.authentication.AuthenticationManager; import
   org.springframework.security.authentication.
   UsernamePasswordAuthenticationToken; import
@@ -24,10 +27,12 @@
   public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
   
   private AuthenticationManager authenticationManager;
+  private AppUserRepository appUserRepository;
   
-  public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+  public JWTAuthenticationFilter(AuthenticationManager authenticationManager,AppUserRepository appUserRepository) {
   
 	  this.authenticationManager = authenticationManager;
+	  this.appUserRepository= appUserRepository;
 	  }
   
   @Override public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -35,9 +40,10 @@
 	  AppUser appUser=new AppUser();
 	  appUser.setUsername(request.getParameter("username")); 
 	  appUser.setPassword(request.getParameter("password")); 
-	  System.out.println("---------------------");
-	  System.out.println(appUser.getUsername());
+	  AppUser us = appUserRepository.findByUsername(request.getParameter("username"));
+	  if(us.getIdTenant().equals(request.getParameter("idTenant")))
 	  return   authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(appUser.getUsername(),appUser.getPassword())); 
+	  return null;
 	  }
   
   @Override protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
