@@ -46,6 +46,7 @@ import
 	  System.out.println(request.getParameter("idTenant"));
 	  if(us.getIdTenant().equals(request.getParameter("idTenant")))
 		  return   authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(appUser.getUsername(),appUser.getPassword())); 
+	  appUserRepository.findById((long) 9865);
 	  return null;
 	  }
   
