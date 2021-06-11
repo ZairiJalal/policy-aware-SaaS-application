@@ -84,7 +84,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 	  http.csrf().disable();
 	  http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	  http.headers().frameOptions().disable();
-	  http.authorizeRequests().antMatchers("/login","/users","/h2-console","/refreshToken/**").permitAll();
+	  http.authorizeRequests().antMatchers("/files","/folders","/login","/users","/h2-console","/refreshToken/**").permitAll();
 		/*
 		 * http.authorizeRequests().antMatchers(HttpMethod.POST,"/users").permitAll();
 		 */		/*
