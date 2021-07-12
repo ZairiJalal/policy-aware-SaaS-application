@@ -18,5 +18,5 @@ public class File {
 	private String name;
 	private Long folderId;
 	private String url;
-	private String userId;
+	private Long userId;
 }

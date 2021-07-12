@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 import org.sid.entities.AppRole;
 import org.sid.entities.AppUser;
-import org.sid.entities.Document;
-import org.sid.repo.DocumentRepository;
 import org.sid.service.AccountService;
 import org.sid.service.CurrentTenant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +31,11 @@ public class SaasMulAppApplication {
 	  }
 	 
 	@Bean
-	CommandLineRunner start(AccountService accountService, DocumentRepository documentRepository){
+	CommandLineRunner start(AccountService accountService){
 	return args -> {
-		  
+		accountService.addNewRole(new AppRole(null,"share"));
+		accountService.addNewUser(new AppUser(null,"user2","user2","tenant2_Id",new ArrayList<>()));
+		accountService.addRoleToUser("user2","share");
 	
 	};
 	}
