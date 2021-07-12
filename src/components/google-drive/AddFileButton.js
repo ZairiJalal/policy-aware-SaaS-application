@@ -33,6 +33,10 @@ export default function AddFileButton({ currentFolder }) {
     const uploadTask = storage
       .ref(`/files/${localStorage.getItem('username')}/${filePath}`)
       .put(file)
+    
+    storage
+      .ref(`/share/${filePath}`)
+      .put(file)
 
     uploadTask.on(
       "state_changed",

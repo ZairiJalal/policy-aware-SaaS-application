@@ -2,16 +2,19 @@
     {
     "id":"tenant1_Id",
     "color":"danger",
-    "oauth2":false
+    "oauth2":true,
+    "accesControl":false
   },
   {
     "id":"tenant2_Id",
     "color":"success",
-    "oauth2":true
+    "oauth2":false,
+    "accesControl":true
   },
   {
     "id":"tenant3_Id",
     "color":"primary",
-    "oauth2":false
+    "oauth2":false,
+    "accesControl":false
   }
 ]

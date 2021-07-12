@@ -9,6 +9,8 @@ import './Login.css';
 import fbLogo from '../../img/fb-logo.png';
 import googleLogo from '../../img/google-logo.png';
 import githubLogo from '../../img/github-logo.png';
+import GoogleLogin from 'react-google-login'
+
 
 
 
@@ -21,48 +23,101 @@ export default function Login() {
   const history = useHistory()
   const { id }= useParams() 
   const tenant = tenants.find(t=>t.id==id)
+  const responseGoogle=(response)=>{
+    console.log(response);
+    console.log(response.profileObj);
+    hhh(response.profileObj.email,response.profileObj.email);
+    }
 
-  async function handleSubmit(e) {
-    e.preventDefault()
-    const params = new URLSearchParams()
-    params.append('username', emailRef.current.value)
-    params.append('password', passwordRef.current.value)
-    params.append('idTenant', tenant.id)
-    const config = {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+    async function hhh(x,y) {
+      const params = new URLSearchParams()
+      params.append('username', x)
+      params.append('password', y)
+      params.append('idTenant', tenant.id)
+      const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
       }
-    }
+      
+      try {
+        setError("")
+        setLoading(true)
+        await login(x, y)
+        axios.post('https://test-saas-mul.herokuapp.com/login',params, config)
+           .then(res=>{
+             
+            localStorage.setItem('token',res.data.Access_Token)
+            localStorage.setItem('username',x)
+            localStorage.setItem('tenant',tenant.id)
+        history.push("/")
+            })
+           .catch(err=>{setError("Failed to log in")})
+           
+      } catch {
+        setError("Failed to log in")
+      }
     
-    try {
-      setError("")
-      setLoading(true)
-      await login(emailRef.current.value+"@gmail.com", passwordRef.current.value)
-      axios.post('https://test-saas-mul.herokuapp.com/login',params, config)
-         .then(res=>{
-          localStorage.setItem('token',res.data.Access_Token)
-          localStorage.setItem('username',emailRef.current.value)
-         localStorage.setItem('tenant',tenant.id)
-      history.push("/")
-          })
-         .catch(err=>{setError("Failed to log in")})
-         
-    } catch {
-      setError("Failed to log in")
-    }
   
+      setLoading(false)
+    }
 
-    setLoading(false)
-  }
+    async function handleSubmit(e) {
+      e.preventDefault()
+      const params = new URLSearchParams()
+      params.append('username', emailRef.current.value)
+      params.append('password', passwordRef.current.value)
+      params.append('idTenant', tenant.id)
+      const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+      
+      try {
+        setError("")
+        setLoading(true)
+        await login(emailRef.current.value+"@gmail.com", passwordRef.current.value)
+        axios.post('https://test-saas-mul.herokuapp.com/login',params, config)
+           .then(res=>{
+            console.log(res.data)
+
+             const base64Url = res.data.Access_Token.split('.')[1];
+             const base64 = base64Url.replace('-', '+').replace('_', '/');
+             
+            localStorage.setItem('token',res.data.Access_Token)
+            localStorage.setItem('roles',JSON.parse(window.atob(base64)).roles)
+
+            localStorage.setItem('username',emailRef.current.value)
+            localStorage.setItem('tenant',tenant.id)
+        history.push("/")
+            })
+           .catch(err=>{setError("Failed to log in")})
+           
+      } catch {
+        setError("Failed to log in")
+      }
+    
+  
+      setLoading(false)
+    }
   if(tenant){
     if(tenant.oauth2){
       return (
           <div className="login-container">
+            
           <div className="login-content">
               <h1 className="login-title">Log in</h1>
               <div className="social-login">
-          <a className="btn btn-block social-btn google" href="/">
-              <img src={googleLogo} alt="Google" /> Log in with Google</a>
+              <GoogleLogin
+        clientId="977770901138-9esobjvbo07smtbj3ikq20alc7b912ln.apps.googleusercontent.com"
+        buttonText="Login"
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+      
+        >Log in with Google </GoogleLogin>
+          
           <a className="btn btn-block social-btn facebook" href="/">
               <img src={fbLogo} alt="Facebook" /> Log in with Facebook</a>
           <a className="btn btn-block social-btn github" href="/">

@@ -9,6 +9,8 @@ import './Login.css';
 import fbLogo from '../../img/fb-logo.png';
 import googleLogo from '../../img/google-logo.png';
 import githubLogo from '../../img/github-logo.png';
+import GoogleLogin from 'react-google-login'
+
 
 export default function Signup() {
   const emailRef = useRef()
@@ -20,7 +22,36 @@ export default function Signup() {
   const history = useHistory()
   const {id}= useParams();  
   const tenant = tenants.find(t=>t.id==id)
-  console.log()
+  const responseGoogle=(response)=>{
+    console.log(response);
+    console.log(response.profileObj);
+    hhh(response.profileObj.email,response.profileObj.email);
+  }
+    
+
+  async function hhh(x,y) {
+    
+    const data = {
+      username:x,
+      password:y,
+      idTenant: tenant.id
+    }
+
+    axios.post('https://test-saas-mul.herokuapp.com/users',data)
+         .then(res=>{console.log(res)})
+         .catch(err=>{console.log(err)})
+
+    try {
+      setError("")
+      setLoading(true)
+      await signup(x, y)
+      history.push("/"+tenant.id+"/login")
+    } catch {
+      setError("Failed to create an account")
+    }
+
+    setLoading(false)
+  }
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -45,6 +76,7 @@ export default function Signup() {
       setError("")
       setLoading(true)
       await signup(emailRef.current.value+"@gmail.com", passwordRef.current.value)
+
       history.push("/"+tenant.id+"/login")
     } catch {
       setError("Failed to create an account")
@@ -57,11 +89,20 @@ export default function Signup() {
     if(tenant.oauth2){
       return (
           <div className="login-container">
+           
           <div className="login-content">
               <h1 className="login-title">Sign up </h1>
               <div className="social-login">
-          <a className="btn btn-block social-btn google" href="/">
-              <img src={googleLogo} alt="Google" /> Sign up with Google</a>
+               <GoogleLogin
+        clientId="977770901138-9esobjvbo07smtbj3ikq20alc7b912ln.apps.googleusercontent.com"
+        buttonText="Login"
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+        
+        > Sign up with Google
+        </GoogleLogin>
+      
           <a className="btn btn-block social-btn facebook" href="/">
               <img src={fbLogo} alt="Facebook" /> Sign up with Facebook</a>
           <a className="btn btn-block social-btn github" href="/">

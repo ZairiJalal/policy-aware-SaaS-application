@@ -13,6 +13,8 @@ const app = firebase.initializeApp({
     measurementId: "G-W8BBMMLV4J"
 })
 
+
+
 const firestore = app.firestore()
 export const database = {
   folders: firestore.collection("folders"),
