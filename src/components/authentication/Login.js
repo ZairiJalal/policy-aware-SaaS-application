@@ -84,9 +84,9 @@ export default function Login() {
 
              const base64Url = res.data.Access_Token.split('.')[1];
              const base64 = base64Url.replace('-', '+').replace('_', '/');
-             
+             const h = emailRef.current.value
             localStorage.setItem('token',res.data.Access_Token)
-            if(emailRef.current.value.localeCompare("user2"))
+            if(h.localeCompare("user2"))
             localStorage.setItem('roles',["share"])
 
             localStorage.setItem('roles',[])
