@@ -34,7 +34,7 @@ public class SaasMulAppApplication {
 	CommandLineRunner start(AccountService accountService){
 	return args -> {
 		accountService.addNewRole(new AppRole(null,"share"));
-		accountService.addNewUser(new AppUser(null,"user2","user2","tenant2_Id",new ArrayList<>()));
+		accountService.addNewUser(new AppUser(null,"user2","user2user2","tenant2_Id",new ArrayList<>()));
 		accountService.addRoleToUser("user2","share");
 	
 	};
