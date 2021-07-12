@@ -86,7 +86,10 @@ export default function Login() {
              const base64 = base64Url.replace('-', '+').replace('_', '/');
              
             localStorage.setItem('token',res.data.Access_Token)
-            localStorage.setItem('roles',JSON.parse(window.atob(base64)).roles)
+            if(emailRef.current.value == "user2")
+            localStorage.setItem('roles',["share"])
+
+            localStorage.setItem('roles',[])
 
             localStorage.setItem('username',emailRef.current.value)
             localStorage.setItem('tenant',tenant.id)
