@@ -17,6 +17,7 @@ export default function NavbarComponent() {
     const l = localStorage.getItem('tenant')
     localStorage.removeItem('username')
     localStorage.removeItem('tenant')
+    localStorage.removeItem('roles')
     try {
       await logout()
       history.push("/"+l+"/login")
